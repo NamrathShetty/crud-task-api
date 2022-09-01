@@ -1,0 +1,29 @@
+{
+  "name": "crud-task-api",
+  "version": "1.0.0",
+  "description": "crud-task-api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NamrathShetty/crud-task-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NamrathShetty/crud-task-api/issues"
+  },
+  "homepage": "https://github.com/NamrathShetty/crud-task-api#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "mongoose": "^6.5.4",
+    "npx": "^10.2.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19",
+    "ws": "3.3.2"
+  }
+}
