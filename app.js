@@ -52,8 +52,7 @@ app.get('/tasklists',(req,res)=>{
 });
 
 //EndPoint to get tasklist by tasklistId
-app.get(
-    '/tasklists/:tasklistId',(req,res)=>{
+app.get('/tasklists/:tasklistId',(req,res)=>{
         let tasklistId=req.params.tasklistId;
         TaskList.find({_id:tasklistId})
         .then((taskList)=>{
@@ -107,6 +106,69 @@ app.delete('/tasklists/:tasklistId',(req,res)=>{
     TaskList.findByIdAndDelete(req.params.tasklistId)
     .then((taskList)=>{
         res.status(201).send(taskList);
+    })
+    .catch((error)=>{
+        console.log(error);
+        
+    });  
+});
+
+/*CRUD operation for Task, a task should belong to a TaskList*/
+//http://localhost:3000/tasklists/:tasklistId/tasks/:taskId
+
+app.get('/tasklists/:tasklistId/tasks',(req,res)=>{
+    Task.find({_taskListId:req.params.tasklistId})
+    .then((tasks)=>{
+        res.status(200).send(tasks);
+    })
+    .catch((error)=>{
+        console.log(error);
+        
+    }); 
+});
+
+//Create a task inside a particular Task List
+app.post('/tasklists/:tasklistId/tasks',(req,res)=>{
+    console.log(req.body);
+    let taskObj={'title':req.body.title,'_taskListId':req.params.tasklistId};
+    Task(taskObj).save()
+    .then((task)=>{res.status(201).send(task);})
+    .catch((error)=>{
+        console.log(error);
+        res.status(500);
+    });
+
+});
+//http://localhost:3000/tasklists/:tasklistId/tasks/:taskId
+//Get 1 task inside 1 TaskList
+app.get('/tasklists/:tasklistId/tasks/:taskId',(req,res)=>{
+    Task.findOne({_taskListId: req.params.tasklistId,_id:req.params.taskId})
+    .then((tasks)=>{
+        res.status(200).send(tasks);
+    })
+    .catch((error)=>{
+        console.log(error);
+        res.status(500);
+    });
+});
+
+//Update 1 task belonging to 1 TaskList
+app.patch('/tasklists/:tasklistId/tasks/:taskId',(req,res)=>{
+    Task.findOneAndUpdate({_taskListId:req.params.tasklistId,_id:req.params.taskId},{$set:req.body})
+    .then((task)=>{
+        res.status(200).send(task);
+    })
+    .catch((error)=>{
+        console.log(error);
+        
+    });  
+});
+
+//Delete 1 task belonging to 1 TaskList
+app.delete('/tasklists/:tasklistId/tasks/:taskId',(req,res)=>{
+    Task.findOneAndDelete({_taskListId:req.params.tasklistId,_id:req.params.taskId})
+    .then((task)=>{
+        res.status(200).send(task);
     })
     .catch((error)=>{
         console.log(error);
